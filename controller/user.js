@@ -59,3 +59,18 @@ exports.uodateCurrentUser = async (req, res, next) => {
     next(error)
   }
 }
+
+exports.getUserList = async (req, res, next) => {
+  try {
+    // res.send('user list')
+    const { limit = 20, offset = 0 } = req.query
+    const userList = await User.find().skip(offset).limit(limit)
+    const count = await User.countDocuments()
+    res.status(200).json({
+      userList,
+      count
+    })
+  } catch (error) {
+    next(error)
+  }
+}
