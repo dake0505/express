@@ -14,7 +14,7 @@ const resourceSchema = new mongoose.Schema({
   },
   body: {
     type: String,
-    required: true
+    required: false
   },
   tagList: {
     type: [String],
