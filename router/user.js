@@ -36,5 +36,12 @@ router.put('/user', userCtrl.uodateCurrentUser)
 // 获取用户列表
 router.get('/user-list', userCtrl.getUserList)
 
+// 签到功能
+router.get(
+  '/user/sign-in',
+  auth,
+  userCtrl.signIn
+)
+
 
 module.exports = router

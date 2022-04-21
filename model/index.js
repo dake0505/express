@@ -20,5 +20,6 @@ db.once('open', function() {
 // 组织模型类
 module.exports = {
   User: mongoose.model('User', require('./user')),
-  Resource: mongoose.model('Resource', require('./resource'))
+  Resource: mongoose.model('Resource', require('./resource')),
+  SignIn: mongoose.model('SignIn', require('./signIn'))
 }

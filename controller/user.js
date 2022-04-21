@@ -1,6 +1,7 @@
-const { User } = require('../model')
+const { User, SignIn } = require('../model')
 const jwt = require('../util/jwt')
 const { jwtSecret } = require('../config/config.default')
+const moment = require('moment')
 
 // 用户注册
 exports.register = async (req, res, next) => {
@@ -69,6 +70,44 @@ exports.getUserList = async (req, res, next) => {
     res.status(200).json({
       userList,
       count
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.signIn = async (req, res, next) => {
+  try {
+    // 历史记录
+    const recordList = await SignIn.find({
+      createdBy: req.user.toJSON().email
+    })
+    // 当前记录
+    let record = {
+      createdBy: req.user.toJSON().email
+    }
+    if (recordList.length === 0) {
+      // 无签到记录
+      record.current = 1
+    } else {
+      const last = recordList.sort((a, b) => b.createdAt - a.createdAt)[0]
+      if (moment(last.createdAt).isSame(new Date(), 'day')) {
+        // 最近一次签到是今天
+        res.status(200).json({
+          msg: '今天已签到'
+        })
+      } else if (moment(last.createdAt).isSame(moment(new Date()).subtract(1, 'days'), 'day')) {
+        // 最近一次签到是昨天
+        record.current = last.current + 1
+      } else {
+        record.current = 1
+      }
+    }
+    console.log('--------------', record, recordList)
+    let recordSave = new SignIn(record)
+    await recordSave.save()
+    res.status(201).json({
+      recordSave
     })
   } catch (error) {
     next(error)
