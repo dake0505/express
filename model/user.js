@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
   image: {
     type: String,
     default: null
+  },
+  score: {
+    type: Number,
+    default: 0
   }
 })
 

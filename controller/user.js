@@ -82,6 +82,8 @@ exports.signIn = async (req, res, next) => {
     const recordList = await SignIn.find({
       createdBy: req.user.toJSON().email
     })
+    // 当前分数
+    const currentScore = await User.findOne({ email: req.user.toJSON().email })
     // 当前记录
     let record = {
       createdBy: req.user.toJSON().email
@@ -96,6 +98,7 @@ exports.signIn = async (req, res, next) => {
         res.status(200).json({
           msg: '今天已签到'
         })
+        return
       } else if (moment(last.createdAt).isSame(moment(new Date()).subtract(1, 'days'), 'day')) {
         // 最近一次签到是昨天
         record.current = last.current + 1
@@ -103,11 +106,15 @@ exports.signIn = async (req, res, next) => {
         record.current = 1
       }
     }
-    console.log('--------------', record, recordList)
+    const scoreRes = await User.findOneAndUpdate(
+      { email: req.user.toJSON().email },
+      { $set: { score:  req.user.toJSON().score + 5 * record.current } }
+    )
     let recordSave = new SignIn(record)
     await recordSave.save()
     res.status(201).json({
-      recordSave
+      recordSave,
+      scoreRes
     })
   } catch (error) {
     next(error)
