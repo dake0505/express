@@ -1,6 +1,7 @@
 const { User, SignIn } = require('../model')
 const jwt = require('../util/jwt')
 const { jwtSecret } = require('../config/config.default')
+const BaseRes = require('../util/baseRes')
 const moment = require('moment')
 
 // 用户注册
@@ -95,9 +96,7 @@ exports.signIn = async (req, res, next) => {
       const last = recordList.sort((a, b) => b.createdAt - a.createdAt)[0]
       if (moment(last.createdAt).isSame(new Date(), 'day')) {
         // 最近一次签到是今天
-        res.status(200).json({
-          msg: '今天已签到'
-        })
+        res.status(200).json(BaseRes.success('今日已签到'))
         return
       } else if (moment(last.createdAt).isSame(moment(new Date()).subtract(1, 'days'), 'day')) {
         // 最近一次签到是昨天
@@ -106,15 +105,19 @@ exports.signIn = async (req, res, next) => {
         record.current = 1
       }
     }
-    const scoreRes = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { email: req.user.toJSON().email },
       { $set: { score:  req.user.toJSON().score + 5 * record.current } }
     )
     let recordSave = new SignIn(record)
     await recordSave.save()
     res.status(201).json({
-      recordSave,
-      scoreRes
+      data: {
+        current: recordSave.current,
+        score: req.user.toJSON().score + 5 * record.current
+      },
+      msg: '签到成功',
+      code: 1
     })
   } catch (error) {
     next(error)
