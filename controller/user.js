@@ -111,14 +111,11 @@ exports.signIn = async (req, res, next) => {
     )
     let recordSave = new SignIn(record)
     await recordSave.save()
-    res.status(201).json({
-      data: {
+    res.status(201).json(
+      BaseRes.success({
         current: recordSave.current,
         score: req.user.toJSON().score + 5 * record.current
-      },
-      msg: '签到成功',
-      code: 1
-    })
+      }))
   } catch (error) {
     next(error)
   }

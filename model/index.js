@@ -21,5 +21,6 @@ db.once('open', function() {
 module.exports = {
   User: mongoose.model('User', require('./user')),
   Resource: mongoose.model('Resource', require('./resource')),
-  SignIn: mongoose.model('SignIn', require('./signIn'))
+  SignIn: mongoose.model('SignIn', require('./signIn')),
+  Warehouse: mongoose.model('Warehouse', require('./warehouse'))
 }
