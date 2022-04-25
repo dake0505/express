@@ -120,3 +120,14 @@ exports.signIn = async (req, res, next) => {
     next(error)
   }
 }
+
+exports.getSignInList = async (req, res, next) => {
+  try {
+    const signInList = await SignIn.find({
+      createdBy: req.user.toJSON().email
+    })
+    res.status(200).json(BaseRes.success(signInList))
+  } catch (error) {
+    next(error)
+  }
+}

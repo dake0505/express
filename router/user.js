@@ -43,5 +43,12 @@ router.get(
   userCtrl.signIn
 )
 
+// 签到记录
+router.get(
+  '/user/sign-in-list',
+  auth,
+  userCtrl.getSignInList
+)
+
 
 module.exports = router

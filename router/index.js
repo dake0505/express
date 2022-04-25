@@ -10,8 +10,11 @@ router.use(require('./user'))
 router.use('/profiles', require('./profile'))
 // 资源相关路由
 router.use(require('./resource'))
-// 仓库
+// 仓库模块路由
 router.use(require('./warehouse'))
+// 商店模块
+router.use(require('./shop'))
+
 
 router.get('/', (req, res) => {
   res.send('Hello World')
