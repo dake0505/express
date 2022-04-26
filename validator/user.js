@@ -32,7 +32,7 @@ exports.login = [
     // 将中间件的req对象解构添加到验证函数中
       .custom(async (email, { req }) => {
         // password在model中select定义为false，此处手动添加可查询
-        const user = await User.findOne({ email }).select(['password', 'username', 'email', 'bio'])
+        const user = await User.findOne({ email }).select(['password', 'username', 'email', 'bio', 'score'])
         if (!user) {
           return Promise.reject('用户不存在')
         }
