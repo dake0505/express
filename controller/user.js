@@ -13,9 +13,9 @@ exports.register = async (req, res, next) => {
     // delete user.password 无法删除属性
     user = user.toJSON() // 调用toJSON，转化为普通js对象，删除password属性
     delete user.password
-    res.status(201).json({
-      user
-    })
+    res.status(201).json(
+      BaseRes.success(user)
+    )
   } catch (error) {
     next(error)
   }
@@ -31,10 +31,11 @@ exports.login = async (req, res, next) => {
       expiresIn: 60*60*24
     })
     delete user.password
-    res.status(200).json({
+    res.status(200).json(
+      BaseRes.success({
       ...user,
       token
-    })
+    }))
   } catch (error) {
     next(error)
   }
