@@ -9,7 +9,9 @@ module.exports = async (req, res, next) => {
     ? token.split('Bearer ')[1]
     : null
   if (!token) {
-    return res.status(401).end()
+    return res.status(401).json({
+      msg: '登录过期'
+    })
   }
   // 验证token
   // verify返回promise，因此要用trycatch

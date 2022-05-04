@@ -14,6 +14,8 @@ router.use(require('./resource'))
 router.use(require('./warehouse'))
 // 商店模块
 router.use(require('./shop'))
+// 订单模块
+router.use(require('./order'))
 
 
 router.get('/', (req, res) => {

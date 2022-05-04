@@ -25,7 +25,7 @@ router.post(
 
 // 获取当前登录用户
 router.get(
-  '/user',
+  '/user/info',
   auth,
   userCtrl.gerCurrentUser
 )

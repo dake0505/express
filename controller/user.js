@@ -46,9 +46,7 @@ exports.gerCurrentUser = async (req, res, next) => {
   try {
     // console.log(req.headers) // 获取请求头
     // res.send('get /user')
-    res.status(200).json({
-      user: req.user
-    })
+    res.status(200).json(BaseRes.success(req.user))
   } catch (error) {
     next(error)
   }

@@ -22,5 +22,6 @@ module.exports = {
   User: mongoose.model('User', require('./user')),
   Resource: mongoose.model('Resource', require('./resource')),
   SignIn: mongoose.model('SignIn', require('./signIn')),
-  Warehouse: mongoose.model('Warehouse', require('./warehouse'))
+  Warehouse: mongoose.model('Warehouse', require('./warehouse')),
+  Order: mongoose.model('Order', require('./order'))
 }
