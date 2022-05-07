@@ -84,6 +84,11 @@ exports.signIn = async (req, res, next) => {
     })
     // 当前分数
     const currentScore = await User.findOne({ email: req.user.toJSON().email })
+    await User.findOneAndUpdate({ email: req.user.toJSON().email }, {
+      $set: {
+        lastSignIn: new Date()
+      }
+    })
     // 当前记录
     let record = {
       createdBy: req.user.toJSON().email
