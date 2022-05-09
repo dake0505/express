@@ -130,6 +130,7 @@ exports.getSignInList = async (req, res, next) => {
     const signInList = await SignIn.find({
       createdBy: req.user.toJSON().email
     })
+    signInList.sort((a, b) => b.createdAt - a.createdAt)
     res.status(200).json(BaseRes.success(signInList))
   } catch (error) {
     next(error)

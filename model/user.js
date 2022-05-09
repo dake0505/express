@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
     set: value => md5(value),
     select: false
   },
+  address: {
+    type: [String],
+  },
   bio: {
     type: String,
     default: null
