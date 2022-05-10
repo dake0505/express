@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema({
     select: false
   },
   address: {
-    type: [String],
+    type: [{
+      tel: Number,
+      address: String,
+      recipient: String,
+    }],
   },
   bio: {
     type: String,

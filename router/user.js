@@ -31,7 +31,7 @@ router.get(
 )
 
 // 更新当前登录用户
-router.put('/user', userCtrl.uodateCurrentUser)
+router.put('/user', auth, userCtrl.updateCurrentUser)
 
 // 获取用户列表
 router.get('/user-list', userCtrl.getUserList)

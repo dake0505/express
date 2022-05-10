@@ -53,9 +53,10 @@ exports.gerCurrentUser = async (req, res, next) => {
 }
 
 // 更新当前登录用户
-exports.uodateCurrentUser = async (req, res, next) => {
+exports.updateCurrentUser = async (req, res, next) => {
   try {
-    res.send('put /user')
+    const newInfo = await User.findOneAndUpdate({ email: req.user.email }, req.body)
+    res.status(200).json(BaseRes.success(newInfo))
   } catch (error) {
     next(error)
   }
