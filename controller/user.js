@@ -68,10 +68,10 @@ exports.getUserList = async (req, res, next) => {
     const { limit = 20, offset = 0 } = req.query
     const userList = await User.find().skip(offset).limit(limit)
     const count = await User.countDocuments()
-    res.status(200).json({
+    res.status(200).json(BaseRes.success({
       userList,
       count
-    })
+    }))
   } catch (error) {
     next(error)
   }
@@ -133,6 +133,17 @@ exports.getSignInList = async (req, res, next) => {
     })
     signInList.sort((a, b) => b.createdAt - a.createdAt)
     res.status(200).json(BaseRes.success(signInList))
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.deleteUser = async (req, res, next) => {
+  try {
+    await User.findOneAndDelete({
+      email: req.query.email
+    })
+    res.status(200).json(BaseRes.success('delete user'))
   } catch (error) {
     next(error)
   }

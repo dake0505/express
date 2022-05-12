@@ -36,6 +36,9 @@ router.put('/user', auth, userCtrl.updateCurrentUser)
 // 获取用户列表
 router.get('/user-list', userCtrl.getUserList)
 
+// 删除用户
+router.delete('/user', userCtrl.deleteUser)
+
 // 签到功能
 router.get(
   '/user/sign-in',
