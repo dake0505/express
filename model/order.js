@@ -12,5 +12,9 @@ const orderSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Warehouse',
     required: true
-  }]
+  }],
+  status: {
+    type: Number,
+    enum: [0, 1, 2, 3, 4] // 0-用户提交；1-商家接单；2-派送中；3-已完成；4-已取消
+  }
 })
