@@ -3,10 +3,12 @@ const BaseRes = require('../util/baseRes')
 
 exports.createOrder = async(req, res, next) => {
   try {
-    const order = new Order(req.body)
+    console.log(req.body)
+    let order = new Order(req.body)
     order.createdBy = req.user.email
     order.createdAt = new Date()
     await order.save()
+    order = order.toJSON()
     res.status(200).json(BaseRes.success(order))
   } catch (error) {
     next(error)
@@ -47,13 +49,12 @@ exports.queryOrder = async(req, res, next) => {
     const limit = pageSize
     const offset = (pageNumber - 1) * pageSize
     const filter = {
-      email: req.user.email
     }
     const orderList = await Order
       .find(filter)
       .skip(offset)
       .limit(limit)
-    const count = await Warehouse.countDocuments({createdBy: req.user.email})
+    const count = await Order.countDocuments()
     res.status(200).json(BaseRes.success({
       list: orderList,
       count
