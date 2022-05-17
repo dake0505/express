@@ -47,7 +47,6 @@ exports.updateWarehouseCommodity = async (req, res, next) => {
       req.body._id,
       {$set: { ...commodity }}
     )
-    console.log(updateItem)
     res.status(200).json(BaseRes.success(updateItem))
   } catch (error) {
     next(error)

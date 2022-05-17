@@ -3,7 +3,6 @@ const BaseRes = require('../util/baseRes')
 
 exports.createOrder = async(req, res, next) => {
   try {
-    console.log(req.body)
     let order = new Order(req.body)
     order.createdBy = req.user.email
     order.createdAt = new Date()
@@ -32,7 +31,7 @@ exports.updateOrder = async(req, res, next) => {
 
 exports.deleteOrder = async(req, res, next) => {
   try {
-    const deleteItem = await Order.findByIdAndDelete(req.query.id)
+    const deleteItem = await Order.findByIdAndDelete(req.query._id)
     if (deleteItem) {
       res.status(200).json(BaseRes.success('删除成功'))
     } else {

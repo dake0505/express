@@ -7,7 +7,6 @@ const moment = require('moment')
 // 用户注册
 exports.register = async (req, res, next) => {
   try {
-    console.log(req.body)
     let user = new User(req.body) // user 为mongoose对象
     await user.save()
     // delete user.password 无法删除属性
